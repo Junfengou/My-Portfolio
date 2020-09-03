@@ -10,9 +10,35 @@ import Todo from "../images/Todo.png";
 //import "./PurpleHome.css";
 import "./Home.css";
 //import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import emailjs, { init } from "emailjs-com";
 
 function Home() {
   //const history = useHistory();
+  init("user_EX1mhfY4Psic2JdoIZ5ch");
+  const { register, handleSubmit, errors } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const sendEmail = (event) => {
+    event.preventDefault();
+
+    emailjs
+      .sendForm("default_service", "template_xgt2oky", event.target, init)
+      .then(
+        (result) => {
+          console.log("Success", result.text);
+        },
+        (error) => {
+          console.log("Failed", error.text);
+        }
+      );
+
+    event.target.reset();
+  };
+
   return (
     <div>
       <section className="s1">
@@ -215,18 +241,48 @@ function Home() {
       <section className="s2">
         <div className="main-container">
           <h3 className="post-title">Contact me</h3>
-          <form id="contact-form">
+          <form id="contact-form" onSubmit={() => handleSubmit(sendEmail)}>
             <label>Name</label>
-            <input className="input-field" type="text" name="name" />
+            <input
+              className="input-field"
+              type="text"
+              placeholder="Full name"
+              name="name"
+              ref={register({ required: true, maxLength: 30 })}
+            />
 
             <label>Subject</label>
-            <input className="input-field" type="text" name="subject" />
+            <input
+              className="input-field"
+              type="text"
+              name="subject"
+              ref={register({ required: true, minLength: 10 })}
+            />
+            {errors.subject && <p>Need more details for subject</p>}
 
             <label>Email</label>
-            <input className="input-field" type="text" name="email" />
+            <input
+              className="input-field"
+              type="text"
+              name="email"
+              ref={register({
+                required: "Required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+            />
+            {errors.email && <p>{errors.email.message}</p>}
 
             <label>Message</label>
-            <textarea className="input-field" type="text" name="message" />
+            <textarea
+              className="input-field"
+              type="text"
+              name="message"
+              ref={register({ required: true })}
+            />
+            {errors.message && <p>Cannot be empty</p>}
             <input id="submit-btn" type="submit" value="Send" />
           </form>
         </div>
