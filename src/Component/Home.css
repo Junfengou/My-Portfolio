@@ -96,7 +96,6 @@ h6 {
   align-content: center;
   min-height: 10em;
 }
-
 .intro-wrapper {
   background-color: var(--secondaryColor);
   border: 1px solid var(--borderColor);
@@ -226,7 +225,7 @@ h6 {
 }
 
 #setting-note {
-  font-size: 12px;
+  font-size: 18px;
   font-style: italic;
   text-align: center;
 }
@@ -287,15 +286,15 @@ h6 {
 }
 
 .about-wrappper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  display: flex;
+  justify-content: center;
   padding-top: 50px;
   padding-bottom: 50px;
   gap: 100px;
   /*
-  display: flex;
-  justify-content: center;
-  border: solid red;*/
+    display: flex;
+    justify-content: center;
+    border: solid red;*/
 }
 
 #skills {
@@ -318,6 +317,7 @@ h6 {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
+  color: var(--mainText);
 }
 
 .post-wrapper {
@@ -345,6 +345,11 @@ h6 {
 .post-preview {
   background-color: #fff;
   padding: 15px;
+}
+
+.post-links {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .post-title {
